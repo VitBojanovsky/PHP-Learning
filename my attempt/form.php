@@ -18,5 +18,6 @@ if ($oblibeny_dinosaurus === '') {
 </head>
 <body>
     <h1><?php echo htmlspecialchars("tvuj oblibeny dinosaurus je " . $oblibeny_dinosaurus, ENT_QUOTES, 'UTF-8'); ?></h1>
+    
 </body>
 </html>
