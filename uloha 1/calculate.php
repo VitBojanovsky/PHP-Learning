@@ -58,6 +58,49 @@ function VypocetCenyZaMaterial($material) {
             break;
     }
 }
+function VypocetCenyZaStylDvirka($styl_dvirek) {
+    switch( $styl_dvirek ) {
+        case 'Hladka':
+            return 0;
+            break;
+        case 'Ramova':
+            return 2500;
+            break;
+        case 'Leskla':
+            return 3500;
+            break;
+        default:
+            return 0;
+            break;
+    }
+}
+function VypocetVestaveneSpotrebice($spotrebice) {
+    $cena = 0;
+    $delka = count($spotrebice);
+    for($i = 0; $i < $delka; $i++) {
+        if($spotrebice[$i] === 'trouba') {
+            $cena += 8000;
+        } 
+        else if($spotrebice[$i] === 'varna_deska') {
+            $cena += 6000;
+        }
+        else if($spotrebice[$i] === 'mycka') {
+            $cena += 10000;
+        }
+        else if($spotrebice[$i] === 'mikrovlnna_trouba') {
+            $cena += 5000;
+        }
+    }
+    return $cena;
+}
+function VypocetMontaze($s_instalaci) {
+    if($s_instalaci === 'ano') {
+        return 5000;
+    }
+    else {
+        return 0;
+    }
+}
 
 
 
