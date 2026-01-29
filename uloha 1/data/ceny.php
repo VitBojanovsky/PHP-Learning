@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'za_m' => 1000,
     'barva' => [
         'bila' => 0,
         'seda' => 1500,

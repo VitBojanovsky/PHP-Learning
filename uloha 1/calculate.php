@@ -47,6 +47,9 @@ function JeCislo($mozna_cislo) {
         return false;
     }
 }
+function CenaZaDelku($rozmer, $ceny) {
+    return $rozmer * $ceny['za_m'];
+}
 function VypocetCenyZaBarvu($barva, $ceny) {
     return $ceny['barva'][strtolower($barva)] ?? 0;
 }
@@ -76,13 +79,14 @@ if(JeCislo($rozmer)) {
     exit(1);
 }
 
+$cena_za_delku = CenaZaDelku($rozmer, $ceny);
 $cena_za_barvu = VypocetCenyZaBarvu($barva, $ceny);
 $cena_za_material = VypocetCenyZaMaterial($material, $ceny);
 $cena_za_styl_dvirek = VypocetCenyZaStylDvirka($styl_dvirek, $ceny);
 $spotrebice_cena = VypocetVestaveneSpotrebice($spotrebice, $ceny);
 $cena_za_montaz = VypocetMontaze($s_instalaci, $ceny);
 
-$finalni_cena = $cena_za_barvu + $cena_za_material + $cena_za_styl_dvirek + $spotrebice_cena + $cena_za_montaz;
+$finalni_cena = $cena_za_delku + $cena_za_barvu + $cena_za_material + $cena_za_styl_dvirek + $spotrebice_cena + $cena_za_montaz;
 
 ?>
 
@@ -94,6 +98,14 @@ $finalni_cena = $cena_za_barvu + $cena_za_material + $cena_za_styl_dvirek + $spo
     <title>Document</title>
 </head>
 <body>
-    <h1>Vysledek kalkulace: <?php echo $finalni_cena; ?></h1>
+    <h1>Vysledek kalkulace:</h1>
+    <div class="result">
+        <p><strong>Délka linky:</strong> <?php echo htmlspecialchars($rozmer, ENT_QUOTES, 'UTF-8'); ?> m</p>
+        <p><strong>Barva:</strong> <?php echo htmlspecialchars($barva, ENT_QUOTES, 'UTF-8'); ?></p>
+        <p><strong>Materiál desky:</strong> <?php echo htmlspecialchars($material, ENT_QUOTES, 'UTF-8'); ?></p>
+        <p><strong>Spotřebiče:</strong> <?php echo !empty($spotrebice) ? htmlspecialchars(implode(', ', $spotrebice), ENT_QUOTES, 'UTF-8') : 'žádné'; ?></p>
+        <p><strong>Montáž:</strong> <?php echo $s_instalaci === 'ano' ? 'ano' : 'ne'; ?></p>
+        <h2>Celková cena: <?php echo $finalni_cena; ?> Kč</h2>
+    </div>
 </body>
 </html>
