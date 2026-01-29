@@ -1,4 +1,15 @@
 <?php
+try {
+    $ceny = require __DIR__ . '/data/ceny.php';
+    if(!is_array($ceny) || empty($ceny)) {
+        throw new Exception('Chybi ceny');
+    }
+}
+catch(Exception $e) {
+    echo("Nepodarilo se nacist ceny: " . $e->getMessage());
+    exit(1);
+}
+
 $method = $_SERVER['REQUEST_METHOD'] ?? 'POST';
 
 $rozmer = $_POST['rozmer'] ?? '';
@@ -23,86 +34,25 @@ function JeCislo($mozna_cislo) {
         return false;
     }
 }
-function VypocetCenyZaBarvu($barva) {
-    switch( $barva ) {
-        case 'Bila':
-            return 0;
-            break;
-        case 'Seda':
-            return 1500;
-            break;
-        case 'Cerna':
-            return 3000;
-            break;
-        case "Drevo":
-            return 2000;
-            break;
-        default:
-            return 0;
-            break;
-    }
+function VypocetCenyZaBarvu($barva, $ceny) {
+    return $ceny['barva'][strtolower($barva)] ?? 0;
 }
-function VypocetCenyZaMaterial($material) {
-    switch( $material ) {
-        case 'Drevo':
-            return 4000;
-            break;
-        case 'Laminat':
-            return 2000;
-            break;
-        case 'Kamen':
-            return 6000;
-            break;
-        default:
-            return 0;
-            break;
-    }
+function VypocetCenyZaMaterial($material, $ceny) {
+    return $ceny['material'][strtolower($material)] ?? 0;
 }
-function VypocetCenyZaStylDvirka($styl_dvirek) {
-    switch( $styl_dvirek ) {
-        case 'Hladka':
-            return 0;
-            break;
-        case 'Ramova':
-            return 2500;
-            break;
-        case 'Leskla':
-            return 3500;
-            break;
-        default:
-            return 0;
-            break;
-    }
+function VypocetCenyZaStylDvirka($styl_dvirek, $ceny) {
+    return $ceny['styl_dvirek'][strtolower($styl_dvirek)] ?? 0;
 }
-function VypocetVestaveneSpotrebice($spotrebice) {
+function VypocetVestaveneSpotrebice($spotrebice, $ceny) {
     $cena = 0;
-    $delka = count($spotrebice);
-    for($i = 0; $i < $delka; $i++) {
-        if($spotrebice[$i] === 'trouba') {
-            $cena += 8000;
-        } 
-        else if($spotrebice[$i] === 'varna_deska') {
-            $cena += 6000;
-        }
-        else if($spotrebice[$i] === 'mycka') {
-            $cena += 10000;
-        }
-        else if($spotrebice[$i] === 'mikrovlnna_trouba') {
-            $cena += 5000;
-        }
+    foreach($spotrebice as $item) {
+        $cena += $ceny['spotrebice'][strtolower($item)] ?? 0;
     }
     return $cena;
 }
-function VypocetMontaze($s_instalaci) {
-    if($s_instalaci === 'ano') {
-        return 5000;
-    }
-    else {
-        return 0;
-    }
+function VypocetMontaze($s_instalaci, $ceny) {
+    return ($s_instalaci === 'ano') ? $ceny['montaz'] : 0;
 }
-
-
 
 
 ?>
