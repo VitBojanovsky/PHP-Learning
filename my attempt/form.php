@@ -4,6 +4,7 @@ $method = $_SERVER['REQUEST_METHOD'] ?? 'POST';
 $raw = $_POST['oblibeny_dinosaurus'] ?? $_POST['oblibeny dinosaurus'] ?? null;
 $oblibeny_dinosaurus = trim((string)$raw);
 
+$oblibena_barva = $_POST['oblibena_barva'] ?? '';
 if ($oblibeny_dinosaurus === '')
     {
         $oblibeny_dinosaurus = 'ERROR_PRAZDNY_INPUT';
@@ -20,6 +21,11 @@ if ($oblibeny_dinosaurus === '')
 <body>
     <?php for ($i = 0;$i<20;$i++) {
     echo htmlspecialchars($i+1 . " tvuj oblibeny dinosaurus je " . $oblibeny_dinosaurus, ENT_QUOTES, 'UTF-8'); 
+    ?>
+    <br>
+
+<?php
+    echo htmlspecialchars("a tvoje oblibena barva je " . $oblibena_barva, ENT_QUOTES, 'UTF-8'); 
     ?>
     <br>
 <?php

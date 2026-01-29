@@ -4,13 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+</head>
+<body>
     <form action="form.php" method="POST">
         <label for="oblibeny dinosaurus">Oblibeny dinosaurus:</label>
         <input type="text" id="oblibeny dinosaurus" name="oblibeny dinosaurus" required>
+        <label>Oblibena barva:</label>
+        <input type="radio" id="modra" name="oblibena_barva" value="modra" required>
+        <label for="modra">Modra</label>
+        <input type="radio" id="cervena" name="oblibena_barva" value="cervena" required>
+        <label for="cervena">Cervena</label>
+        <input type="radio" id="zelena" name="oblibena_barva" value="zelena" required>
+        <label for="zelena">Zelena</label>
         <button type="submit">Submit</button>
     </form>
-</head>
-<body>
-    
 </body>
 </html>
