@@ -1,5 +1,5 @@
 <?php
-$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+$method = $_SERVER['REQUEST_METHOD'] ?? 'POST';
 
 $raw = $_POST['oblibeny_dinosaurus'] ?? $_POST['oblibeny dinosaurus'] ?? null;
 $oblibeny_dinosaurus = trim((string)$raw);
