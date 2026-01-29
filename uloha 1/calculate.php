@@ -42,5 +42,24 @@ function VypocetCenyZaBarvu($barva) {
             break;
     }
 }
+function VypocetCenyZaMaterial($material) {
+    switch( $material ) {
+        case 'Drevo':
+            return 4000;
+            break;
+        case 'Laminat':
+            return 2000;
+            break;
+        case 'Kamen':
+            return 6000;
+            break;
+        default:
+            return 0;
+            break;
+    }
+}
+
+
+
 
 ?>
