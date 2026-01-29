@@ -16,9 +16,17 @@ $rozmer = $_POST['rozmer'] ?? '';
 $barva = $_POST['barva'] ?? '';
 $material = $_POST['material'] ?? '';
 $styl_dvirek = $_POST['styl_dvirek'] ??'';
+$spotrebice = $_POST['spotrebice'] ?? [];
 $s_instalaci = $_POST['s_instalaci'] ?? 'ne';
 
 function JePrazdny($var) {
+    if(is_array($var)) {
+        for($i = 0; $i < count($var); $i++) {
+            if($var[$i] !== '') {
+                return false;
+            }
+        }
+    }
     if($var === '') {
         return true;
     }
@@ -28,7 +36,12 @@ function JePrazdny($var) {
 }
 function JeCislo($mozna_cislo) {
     if (is_numeric($mozna_cislo)) {
-        return true;
+        if($mozna_cislo < 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
     else {
         return false;
@@ -54,5 +67,33 @@ function VypocetMontaze($s_instalaci, $ceny) {
     return ($s_instalaci === 'ano') ? $ceny['montaz'] : 0;
 }
 
+if(JePrazdny($rozmer) || JePrazdny($barva) || JePrazdny($material) || JePrazdny($styl_dvirek)) {
+    echo("Nektere povinne udaje chybi.");
+    exit(1);
+}
+if(JeCislo($rozmer)) {
+    echo("Rozmer neni cislo.");
+    exit(1);
+}
+
+$cena_za_barvu = VypocetCenyZaBarvu($barva, $ceny);
+$cena_za_material = VypocetCenyZaMaterial($material, $ceny);
+$cena_za_styl_dvirek = VypocetCenyZaStylDvirka($styl_dvirek, $ceny);
+$spotrebice_cena = VypocetVestaveneSpotrebice($spotrebice, $ceny);
+$cena_za_montaz = VypocetMontaze($s_instalaci, $ceny);
+
+$finalni_cena = $cena_za_barvu + $cena_za_material + $cena_za_styl_dvirek + $spotrebice_cena + $cena_za_montaz;
 
 ?>
+
+<!DOCTYPE html>
+<html lang="cz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Vysledek kalkulace: <?php echo $finalni_cena; ?></h1>
+</body>
+</html>
