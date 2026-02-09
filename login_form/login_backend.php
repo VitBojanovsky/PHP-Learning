@@ -47,6 +47,14 @@ if ($auth) {
     <h1><?php if($auth) { echo "Prihlaseni uspesne"; } else { echo "Neplatny login"; } ?></h1>
     <p><?php echo("zadane username = " . $jmeno); ?></p>
     <p><?php echo("zadane heslo = " . $heslo); ?></p>
+    <?php 
+        echo '<form action="" method="get">
+        <button type="submit" name="logout">Logout</button>
+        </form>';
+    echo isset($_GET['logout']) ? session_destroy() : '';
+    
+    
+    ?>
 </head>
 <body>
     
