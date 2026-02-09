@@ -29,6 +29,14 @@ for($i = 0; $i<count($uzivatele); $i++) {
         break;
     }
 }
+
+if ($auth) {
+    $_SESSION['auth'] = true;
+    $_SESSION['username'] = $jmeno;
+} else {
+    $_SESSION['auth'] = false;
+    unset($_SESSION['username']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
